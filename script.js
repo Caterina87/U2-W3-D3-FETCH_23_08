@@ -1,12 +1,11 @@
 fetch("https:striveschool-api.herokuapp.com/books")
   .then((response) => response.json())
-  .then((booksObj) => {
-    console.log(booksObj);
-    const row = document.querySelector("row");
+  .then((books) => {
+    console.log(books);
 
-    booksObj.response.forEach((book) => {
-      const title = book.title;
+    const row = document.getElementsByClassName("row");
 
+    books.forEach((book) => {
       const col = document.createElement("div");
       col.className = "col";
 
@@ -16,11 +15,15 @@ fetch("https:striveschool-api.herokuapp.com/books")
                                              <h5 class="card-title">${book.title}</h5>
                                              <p class="card-text">${book.price}</p>
                                              <a href="#" class="btn btn-primary">Add to Cart</a>
-                                             <a href="#" class="btn btn-primary">Remove</a>
+                                             <a href="#" class="btn btn-primary" onclick="skipMe(event)">Remove</a>
                                          </div>
                                      </div>`;
 
-      row.appendChild(col);
+      row[0].appendChild(col);
     });
   })
   .catch((error) => console.log(error));
+
+const skipMe = (event) => {
+  event.target.closest(".col").remove();
+};
